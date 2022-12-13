@@ -1,0 +1,1165 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package workpanch;
+
+
+
+import java.awt.Toolkit;
+import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import net.proteanit.sql.DbUtils;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.table.TableModel;
+
+/**
+ *
+ * @author user
+ */
+public class mainPage extends javax.swing.JFrame {
+    
+    DefaultComboBoxModel dm=new DefaultComboBoxModel();
+    Connection con=null;
+    PreparedStatement ps=null;
+    ResultSet rs=null;
+    public String DbName;
+    public String name;
+    public String meqan;
+    public String selCondition;
+    
+    
+    
+    
+    public  mainPage() {
+        initComponents();
+        //showTable();
+        
+        this.setIconImage(new ImageIcon(getClass().getResource("fake.jpg")).getImage());
+        dataBase();
+        
+        //show databases
+       
+        
+        
+         
+        //Add tables to combox 
+        
+        
+    }
+    
+    public void showTableList()
+            
+    {
+        name=(String)jComboBox1.getSelectedItem();
+        meqan=(String)jComboBox1.getSelectedItem();
+       
+            
+        try{
+            Class.forName("java.sql.Driver");
+            name=(String)jComboBox2.getSelectedItem();
+            String url="jdbc:mysql://localhost:3306/"+name;
+            String user="root";
+            String pwd="";
+            Connection con=DriverManager.getConnection(url,user,pwd);
+            
+            String show="show tables from "+name;
+            ps=con.prepareStatement(show);
+            ResultSet rs=ps.executeQuery();
+            jComboBox1.removeAllItems();
+            while(rs.next())
+            {
+                //String dude=rs.getString("name");
+                
+                jComboBox1.addItem(rs.getString(1));
+                jComboBox3.addItem(rs.getString(1));
+            }
+
+        }
+
+        catch(SQLException e)
+        {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null,e);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(WorkPanch.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+    
+     public void dataBase(){
+         //name=(String)jComboBox2.getSelectedItem();
+        try{
+           
+            Class.forName("java.sql.Driver");
+            String url="jdbc:mysql://localhost:3306/";
+            String user="root";
+            String pwd="";
+            Connection con=DriverManager.getConnection(url,user,pwd);
+            String show="show databases ";
+            
+            //jComboBox2.removeAllItems();
+            ps=con.prepareStatement(show);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next())
+            {
+                //String dude=rs.getString("name");
+                jComboBox2.addItem(rs.getString(1));
+            }
+
+        }
+
+        catch(SQLException e)
+        {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null,e);
+        } catch (ClassNotFoundException ex) {
+            //Logger.getLogger(editDb.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        
+        }
+
+    public void icon()
+    {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("cash_register.ico")));
+    }
+    
+    public void showTable()
+    {
+        name=(String)jComboBox2.getSelectedItem();
+        meqan=(String)jComboBox1.getSelectedItem();
+        try{
+            Class.forName("java.sql.Driver");
+            String url="jdbc:mysql://localhost:3306/"+name;
+            String user="root";
+            String pwd="";
+            con=DriverManager.getConnection(url,user,pwd);
+            String select="Select * from "+meqan;
+            PreparedStatement stmt=con.prepareStatement(select);
+            rs=stmt.executeQuery();
+            jTable1.setModel(DbUtils.resultSetToTableModel(rs));
+
+        }
+
+        catch(SQLException e)
+        {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null,e);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(WorkPanch.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jpnl1 = new javax.swing.JPanel();
+        jDesktopPane3 = new javax.swing.JDesktopPane();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jtxtDbName = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jButton3 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jtxtDbName2 = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
+        jtxtDbName4 = new javax.swing.JTextField();
+        jDesktopPane2 = new javax.swing.JDesktopPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel13 = new javax.swing.JLabel();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jLabel12 = new javax.swing.JLabel();
+        jtxtCond = new javax.swing.JTextField();
+        jButton6 = new javax.swing.JButton();
+        jDesktopPane1 = new javax.swing.JDesktopPane();
+        jLabel1 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("WORKBENCH");
+        setBackground(new java.awt.Color(0, 255, 204));
+        setBounds(new java.awt.Rectangle(10, 10, 0, 0));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setForeground(java.awt.Color.black);
+        setLocation(new java.awt.Point(0, 0));
+        setName("Main Page"); // NOI18N
+        setResizable(false);
+
+        jpnl1.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        jpnl1.setPreferredSize(new java.awt.Dimension(595, 616));
+
+        jDesktopPane3.setBackground(new java.awt.Color(153, 204, 255));
+
+        jLabel2.setFont(new java.awt.Font("Power Geez Unicode1", 1, 14)); // NOI18N
+        jLabel2.setText("የቋት ስም");
+
+        jLabel5.setFont(new java.awt.Font("Power Geez Unicode1", 0, 14)); // NOI18N
+        jLabel5.setText("የቋት ስም");
+
+        jtxtDbName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtDbNameActionPerformed(evt);
+            }
+        });
+
+        jButton1.setFont(new java.awt.Font("Power Geez Unicode1", 0, 11)); // NOI18N
+        jButton1.setText("ፍጠር");
+        jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Power Geez Unicode1", 1, 14)); // NOI18N
+        jLabel7.setText("ቋቱን ");
+
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setFont(new java.awt.Font("Power Geez Unicode1", 0, 11)); // NOI18N
+        jButton3.setText("አጥፋ");
+        jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Power Geez Unicode1", 1, 14)); // NOI18N
+        jLabel8.setText("ሰንጠረዥ  ");
+
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        jButton7.setFont(new java.awt.Font("Power Geez Unicode1", 0, 11)); // NOI18N
+        jButton7.setText("ሰንጠረዡን አጥፋ");
+        jButton7.setActionCommand("ሰንጠረዙን አጥፋ");
+        jButton7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jButton8.setFont(new java.awt.Font("Power Geez Unicode1", 0, 11)); // NOI18N
+        jButton8.setText("ማስተካከያ");
+        jButton8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        jButton9.setFont(new java.awt.Font("Power Geez Unicode1", 0, 11)); // NOI18N
+        jButton9.setText("አስገባ");
+        jButton9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setFont(new java.awt.Font("Power Geez Unicode1", 0, 11)); // NOI18N
+        jButton4.setText("መደዳውን አጥፋ");
+        jButton4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setFont(new java.awt.Font("Power Geez Unicode1", 1, 14)); // NOI18N
+        jLabel11.setText("ስም   ");
+
+        jtxtDbName2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtDbName2ActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Power Geez Unicode1", 1, 14)); // NOI18N
+        jLabel9.setText("ሰንጠረዡን ፍጠር");
+
+        jLabel10.setFont(new java.awt.Font("Power Geez Unicode1", 1, 14)); // NOI18N
+        jLabel10.setText("        ቁጥር  ");
+
+        jButton5.setFont(new java.awt.Font("Power Geez Unicode1", 0, 11)); // NOI18N
+        jButton5.setText("ጨምር");
+        jButton5.setActionCommand("");
+        jButton5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jtxtDbName4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtDbName4ActionPerformed(evt);
+            }
+        });
+
+        jDesktopPane3.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(jtxtDbName, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(jComboBox2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(jButton3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(jComboBox1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(jButton7, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(jButton8, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(jButton9, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(jButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(jLabel11, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(jtxtDbName2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(jLabel9, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(jLabel10, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(jButton5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(jtxtDbName4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jDesktopPane3Layout = new javax.swing.GroupLayout(jDesktopPane3);
+        jDesktopPane3.setLayout(jDesktopPane3Layout);
+        jDesktopPane3Layout.setHorizontalGroup(
+            jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane3Layout.createSequentialGroup()
+                .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jDesktopPane3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jtxtDbName2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel10)
+                        .addGap(18, 18, 18)
+                        .addComponent(jtxtDbName4, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jDesktopPane3Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jDesktopPane3Layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jDesktopPane3Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)
+                        .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jDesktopPane3Layout.createSequentialGroup()
+                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jDesktopPane3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jtxtDbName, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
+        );
+        jDesktopPane3Layout.setVerticalGroup(
+            jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDesktopPane3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addGap(9, 9, 9)
+                .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtxtDbName, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtxtDbName2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtxtDbName4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+
+        jDesktopPane2.setBackground(new java.awt.Color(255, 204, 204));
+        jDesktopPane2.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), new javax.swing.border.MatteBorder(null)));
+        jDesktopPane2.setPreferredSize(new java.awt.Dimension(571, 200));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jLabel13.setFont(new java.awt.Font("Power Geez Unicode1", 1, 14)); // NOI18N
+        jLabel13.setText("  አማራጭ");
+
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setFont(new java.awt.Font("Power Geez Unicode1", 1, 14)); // NOI18N
+        jLabel12.setText("አማራጭ");
+
+        jtxtCond.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtCondActionPerformed(evt);
+            }
+        });
+
+        jButton6.setFont(new java.awt.Font("Power Geez Unicode1", 0, 11)); // NOI18N
+        jButton6.setText(" ምረጥ  *");
+        jButton6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jDesktopPane2.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane2.setLayer(jLabel13, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane2.setLayer(jComboBox3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane2.setLayer(jLabel12, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane2.setLayer(jtxtCond, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane2.setLayer(jButton6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jDesktopPane2Layout = new javax.swing.GroupLayout(jDesktopPane2);
+        jDesktopPane2.setLayout(jDesktopPane2Layout);
+        jDesktopPane2Layout.setHorizontalGroup(
+            jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDesktopPane2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jDesktopPane2Layout.createSequentialGroup()
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtxtCond, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jDesktopPane2Layout.setVerticalGroup(
+            jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDesktopPane2Layout.createSequentialGroup()
+                .addContainerGap(12, Short.MAX_VALUE)
+                .addGroup(jDesktopPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtxtCond, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox3)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jpnl1Layout = new javax.swing.GroupLayout(jpnl1);
+        jpnl1.setLayout(jpnl1Layout);
+        jpnl1Layout.setHorizontalGroup(
+            jpnl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnl1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpnl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jDesktopPane3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jDesktopPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 693, Short.MAX_VALUE)))
+        );
+        jpnl1Layout.setVerticalGroup(
+            jpnl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnl1Layout.createSequentialGroup()
+                .addComponent(jDesktopPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jDesktopPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(118, Short.MAX_VALUE))
+        );
+
+        jDesktopPane1.setBackground(new java.awt.Color(0, 51, 51));
+        jDesktopPane1.setForeground(new java.awt.Color(0, 51, 51));
+
+        jLabel1.setBackground(new java.awt.Color(204, 0, 255));
+        jLabel1.setFont(new java.awt.Font("Stencil", 1, 24)); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/workpanch/black.jpg"))); // NOI18N
+        jLabel1.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+
+        jDesktopPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
+        jDesktopPane1.setLayout(jDesktopPane1Layout);
+        jDesktopPane1Layout.setHorizontalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 665, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+        jDesktopPane1Layout.setVerticalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, Short.MAX_VALUE)
+        );
+
+        jMenu1.setText("Help");
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jDesktopPane1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jpnl1, javax.swing.GroupLayout.DEFAULT_SIZE, 703, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jpnl1, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+       
+        name=(String)jComboBox2.getSelectedItem();
+        String tName=String.valueOf(jtxtDbName2.getText());
+        String data[]={"VARCHAR(50)","INT"};
+        String prim[]={"null","PRIMARY KEY"};
+       try{
+        if(jtxtDbName2.getText().length()==0)
+        {
+            JOptionPane.showMessageDialog(null, "Please enter table name");
+            jtxtDbName2.setText("");
+            jtxtDbName4.setText("");
+        }
+       else if(jtxtDbName4.getText().length()==0)
+        {
+            JOptionPane.showMessageDialog(null, "Enter correct ");
+        }
+        else
+        {
+        int numColumn=Integer.parseInt(jtxtDbName4.getText());
+        JTextField colName=new JTextField();
+        JComboBox dataType=new JComboBox(data);
+        JComboBox primary=new JComboBox(prim);
+        Object[] fuzzy={"Column name",colName,"Data Type",dataType,"Check Primary",primary};
+        String que="create table "+tName+" ( ";
+        
+        
+        
+            for(int i=0;i<numColumn;i++)
+            {
+                
+                JOptionPane.showMessageDialog(null, fuzzy);
+                que=que+colName.getText()+" "+dataType.getSelectedItem()+" ";
+                if(primary.getSelectedItem().equals("PRIMARY KEY"))
+                    que=que+" primary key";
+                if(i==numColumn-1)
+                      que=que+")";
+                else
+                    que=que+", ";
+                colName.setText("");
+            }
+            
+            try{
+            Class.forName("java.sql.Driver");
+            String url="jdbc:mysql://localhost:3306/"+name;
+            String user="root";
+            String pwd="";
+            con=DriverManager.getConnection(url,user,pwd);
+            PreparedStatement stmt=con.prepareStatement(que);
+            stmt.execute();
+            JOptionPane.showMessageDialog(null,"Table  '"+tName+"' created successfully");
+            jComboBox1.addItem(tName);
+            jtxtDbName2.setText(null);
+            jtxtDbName4.setText(null);
+            }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(null," You can't have multiple primary keyr");
+            colName.setText("");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(WorkPanch.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Connection error");
+        } 
+        }
+       }
+       catch(NumberFormatException e){
+           JOptionPane.showMessageDialog(null, "Please inter integer");
+           jtxtDbName4.setText("");
+       }
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jtxtDbName2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtDbName2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtDbName2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+      
+        name=(String)jComboBox2.getSelectedItem();
+        meqan=(String)jComboBox1.getSelectedItem();
+                try{        
+            Class.forName("java.sql.Driver");
+            String url="jdbc:mysql://localhost:3306/"+name;
+            String user="root";
+            String pwd="";
+            Connection con=DriverManager.getConnection(url,user,pwd);
+            String select="delete from "+meqan+" where ";
+            Statement stmt=con.createStatement();
+            
+            TableModel model=jTable1.getModel();
+            int d=model.getColumnCount();
+            int r=jTable1.getSelectedRow();
+             ArrayList<String> al=new ArrayList();
+            for (int i=0;i<d;i++)
+            {
+                if(i!=d-1){
+                        select=select+model.getColumnName(i);
+                        select=select+" = ";
+                        select=select+"'"+model.getValueAt(r, i)+"' and ";
+                }
+                else{
+                        select=select+model.getColumnName(i);
+                        select=select+" = ";
+                        select=select+"'"+model.getValueAt(r, i)+"' ";
+                }
+               
+            }
+            
+            System.out.println(select);
+            stmt.execute(select);
+            JOptionPane.showMessageDialog(null,"One row deleted ");
+              showTable();   
+                
+           
+            
+
+        }
+
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(null,e.toString());
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null,ex.toString() );
+        }
+                catch(ArrayIndexOutOfBoundsException e){
+                  JOptionPane.showMessageDialog(null,"Select Row from table");
+                }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+       try{
+        if(jComboBox1.getSelectedItem().equals(null)){
+         JOptionPane.showMessageDialog(null,"empty");
+       }
+       else{
+        name=(String)jComboBox2.getSelectedItem();
+        meqan=(String)jComboBox1.getSelectedItem();
+        JTextField jtxtinsert=new JTextField();
+        String que="SHOW COLUMNS FROM "+meqan+" FROM "+name;
+        ArrayList<String> al=new ArrayList();
+        try{
+            Class.forName("java.sql.Driver");
+            String url="jdbc:mysql://localhost:3306/"+name;
+            String user="root";
+            String pwd="";
+            con=DriverManager.getConnection(url,user,pwd);
+            PreparedStatement stmt=con.prepareStatement(que);
+            rs=stmt.executeQuery();
+            
+            while(rs.next())
+            {
+                Object[] message={rs.getString(1),jtxtinsert};
+                 JOptionPane.showMessageDialog(null, message);
+                 String qq=jtxtinsert.getText();
+                 al.add(qq);
+                 jtxtinsert.setText("");
+                 //jtxtinsert=null;
+            }
+            String insert="insert into "+meqan+" values ('";
+                      
+            for(int i=0;i<al.size();i++)
+            {
+                if(i!=0)
+                {
+                    insert=insert+"','"+al.get(i);
+                }
+                else
+                {
+                    insert=insert+al.get(i);
+                }
+            }
+            insert=insert+"')";
+            System.out.println(insert);
+            ps.execute(insert);
+           JOptionPane.showMessageDialog(rootPane, "Inserted Succesfully");
+             showTable();
+
+        }
+
+        catch(SQLException e)
+        {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null,e);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(WorkPanch.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex);
+        }
+       }
+    }
+    catch(NullPointerException e){
+    JOptionPane.showMessageDialog(null, "Select table first");
+    }
+       //Object[] insertData={"Column name ",jtxt3};
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+       try{
+        meqan=(String)jComboBox1.getSelectedItem();
+        String que="SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`=+'"+name+"' AND `TABLE_NAME`='"+meqan+"'";
+        if(jComboBox1.getSelectedItem().equals(null)){
+         JOptionPane.showMessageDialog(null,meqan+" is empty");
+        }
+        else{
+        JComboBox jComboBox3=new JComboBox();
+        JTextField jtxt=new JTextField();
+        JComboBox jComboBox4=new JComboBox();
+        JTextField jtxt2=new JTextField();
+        try{
+            Class.forName("java.sql.Driver");
+            String url="jdbc:mysql://localhost:3306/"+name;
+            String user="root";
+            String pwd="";
+            Connection con=DriverManager.getConnection(url,user,pwd);
+            ps=con.prepareStatement(que);
+            ResultSet rs=ps.executeQuery();
+           
+           
+            while(rs.next())
+            {
+                //String dude=rs.getString("name");
+                jComboBox3.addItem(rs.getString(1));
+                
+            }
+            Object[] message={"column",jComboBox3,"Where",jtxt};
+            JOptionPane.showMessageDialog(null, message);
+            
+            String condition=(String)jtxt.getText();
+            String where=(String)jComboBox3.getSelectedItem();
+            rs=ps.executeQuery();
+           
+           
+            while(rs.next())
+            {
+                //String dude=rs.getString("name");
+                jComboBox4.addItem(rs.getString(1));
+                
+            }
+             Object[] Set={"column",jComboBox4,"SET",jtxt2};
+            JOptionPane.showMessageDialog(null, Set);
+            String setText=jtxt2.getText();
+            String setCombo=(String)jComboBox4.getSelectedItem();
+            System.out.println(where+"condition"+condition+"Column name"+setCombo);
+            String que1="UPDATE `"+meqan+"` SET `"+setCombo+"`='"+setText+"' WHERE "+where+"='"+condition+"'";
+            ps.executeUpdate(que1);
+            JOptionPane.showMessageDialog(rootPane, "Updated succesfully");
+             showTable();
+
+        }
+
+        catch(SQLException e)
+        {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null,e);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(WorkPanch.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex);
+        }
+       
+        }
+       }
+        catch(NullPointerException e){
+        JOptionPane.showMessageDialog(null, "Select table first");
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        //this.setVisible(false);
+        //a.setVisible(true);
+       try{
+           if(jComboBox1.getSelectedItem().equals(null)){
+               JOptionPane.showMessageDialog(null, "Select table first");
+           }
+           else{
+        String query="drop table "+(String)jComboBox1.getSelectedItem();
+        String combo=(String)jComboBox1.getSelectedItem();
+        meqan=(String)jComboBox1.getSelectedItem();
+        meqan=(String)jComboBox2.getSelectedItem();
+         try{
+            Class.forName("java.sql.Driver");
+            String url="jdbc:mysql://localhost:3306/"+name;
+            String user="root";
+            String pwd="";
+            Connection con=DriverManager.getConnection(url,user,pwd);
+            Statement st=con.createStatement();
+                st.execute(query);
+            JOptionPane.showMessageDialog(null, "Deleted Successfully "+combo);
+            jComboBox1.removeItem(combo);
+         }
+         catch(SQLException e)
+        {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null,e);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(WorkPanch.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex);
+        }
+         }
+        }
+       catch(NullPointerException e){
+           JOptionPane.showMessageDialog(null, "Select table first");
+       }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+                meqan=(String)jComboBox1.getSelectedItem();
+        jComboBox3.removeAllItems();
+        String que="SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`=+'"+name+"' AND `TABLE_NAME`='"+meqan+"'";
+        //JComboBox jComboBox3=new JComboBox();
+         String jtxt=jtxtCond.getText();
+        try{
+            Class.forName("java.sql.Driver");
+            String url="jdbc:mysql://localhost:3306/"+name;
+            String user="root";
+            String pwd="";
+            Connection con=DriverManager.getConnection(url,user,pwd);
+            ps=con.prepareStatement(que);
+            ResultSet rs=ps.executeQuery();
+           
+            jComboBox3.addItem("1");
+            while(rs.next())
+            {
+                //String dude=rs.getString("name");
+                jComboBox3.addItem(rs.getString(1));
+                
+            }
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null,e);
+        } catch (ClassNotFoundException ex) {
+           Logger.getLogger(WorkPanch.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        String que="drop database "+name;
+        
+            String url="jdbc:mysql://localhost:3306/";
+            String user="root";
+            String pwd="";
+         try{
+            Class.forName("java.sql.Driver");
+            
+            try (Connection con = DriverManager.getConnection(url,user,pwd)) {
+                Statement st=con.createStatement();
+                st.execute(que);
+                con.close();
+            }
+            JOptionPane.showMessageDialog(null,name+" Deleted Succesfully"); 
+            jComboBox2.removeItem(name);
+        }
+
+        catch(SQLException e)
+        {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null,"Connection error !");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(WorkPanch.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Connection error !");
+        }
+       
+        
+       
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try{
+            if(jtxtDbName.getText().length()==0){
+                JOptionPane.showMessageDialog(null,"Enter database name first");
+            }
+            else{
+                DbName=jtxtDbName.getText();
+                Class.forName("java.sql.Driver");
+                String url="jdbc:mysql://localhost:3306/";
+                String user="root";
+                String password="";
+                Connection con=DriverManager.getConnection(url,user,password);
+                Statement stmt=con.createStatement();
+                String addDB="create database  "+DbName;
+                //String que="insert into park(Region,Country,Area) values('jda','USA','7890')";
+                stmt.execute(addDB);
+                //String qq="select name from sys.sysdatabases";
+                //stmt.execute(qq);
+                // JOptionPane.showMessageDialog(null,"list database works");
+                
+                //stmt.executeQuery(addDB);
+                //stmt.executeUpdate(que);
+                jComboBox2.addItem(DbName);
+                JOptionPane.showMessageDialog(null, " database  "+"'"+DbName+"' successfully created");
+                jtxtDbName.setText(null);
+            }  
+        }
+        
+        catch (ClassNotFoundException ex) {
+            Logger.getLogger(WorkPanch.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null,ex);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"database "+DbName+" exists ");  
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jtxtDbNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtDbNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtDbNameActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        name=(String)jComboBox2.getSelectedItem();
+        meqan=(String)jComboBox1.getSelectedItem();
+        try{
+            
+           if(jtxtCond.getText().length()==0){
+                JOptionPane.showMessageDialog(null,"Enter the condition first");
+            }
+            else{
+            Class.forName("java.sql.Driver");
+            String url="jdbc:mysql://localhost:3306/"+name;
+            String user="root";
+            String pwd="";
+            con=DriverManager.getConnection(url,user,pwd);
+            selCondition="Select * from "+meqan+" where ";
+            selCondition=selCondition+(String)jComboBox3.getSelectedItem()+" =";
+            selCondition=selCondition+"'"+jtxtCond.getText()+"'";
+            System.out.println(selCondition);
+            PreparedStatement stmt=con.prepareStatement(selCondition);
+            ResultSet rs=stmt.executeQuery();
+            jTable1.setModel(DbUtils.resultSetToTableModel(rs));
+            
+
+        }
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null,"Mismatched choice");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(WorkPanch.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.toString());
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jtxtCondActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtCondActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtCondActionPerformed
+
+    private void jtxtDbName4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtDbName4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtDbName4ActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+       showTableList();
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+
+    }//GEN-LAST:event_jComboBox3ActionPerformed
+
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+           // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu1ActionPerformed
+   
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) throws Exception {
+        Class.forName("java.sql.Driver");
+            String url="jdbc:mysql://localhost:3306/";
+            String user="root";
+            String password="";
+            Connection con=DriverManager.getConnection(url,user,password);
+            Statement stmt=con.createStatement();
+            
+        
+        /* Set the Nimbus look and feel */
+        
+        //icon t=new icon();
+        
+        
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(mainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(mainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(mainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(mainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+       
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new mainPage().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JDesktopPane jDesktopPane2;
+    private javax.swing.JDesktopPane jDesktopPane3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    public static javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JPanel jpnl1;
+    public static javax.swing.JTextField jtxtCond;
+    public static javax.swing.JTextField jtxtDbName;
+    public static javax.swing.JTextField jtxtDbName2;
+    public static javax.swing.JTextField jtxtDbName4;
+    // End of variables declaration//GEN-END:variables
+  
+}
